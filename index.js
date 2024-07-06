@@ -1,14 +1,17 @@
 import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import nodeFetch from "node-fetch";
 
 const app = express();
-const PORT = 3000;
+const PORT = 3003;
 
-app.use("/api", function (req, res, next) {
-  createProxyMiddleware({
-    target: req.query.url,
-    changeOrigin: true,
-  })(req, res, next);
+app.use("/api", async function (req, res) {
+  const request = await nodeFetch(req.query.url);
+  const text = await request.text();
+
+  const content_type = request.headers.get("content-type");
+
+  res.set("Content-Type", content_type);
+  res.send(text);
 });
 
 app.listen(PORT, () => {
