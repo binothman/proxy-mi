@@ -10,18 +10,29 @@ const PORT = process.env.PORT || 4000;
 app.use("/api", async function (req, res) {
   try {
     const browser = await puppeteer.launch({
-      headless: true,
+      defaultViewport: null,
+      headless: false,
       ignoreHTTPSErrors: true,
+      ignoreDefaultArgs: ["--enable-automation"],
       args: [
+        "--kiosks",
+        "--disable-accelerated-2d-canvas",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-canvas-aa",
+        "--disable-2d-canvas-clip-aa",
+        "--disable-gl-drawing-for-tests",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--no-zygote",
+        "--use-gl=desktop",
+        "--hide-scrollbars",
+        "--mute-audio",
+        "--no-first-run",
+        "--disable-infobars",
+        "--disable-breakpad",
         "--no-sandbox",
         "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-accelerated-2d-canvas",
-        "--no-first-run",
-        "--no-zygote",
-        "--single-process",
-        "--disable-gpu",
-        "--ignore-certificate-errors",
       ],
     });
     const [page] = await browser.pages();
