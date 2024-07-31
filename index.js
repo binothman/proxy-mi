@@ -11,7 +11,7 @@ app.use("/api", async function (req, res) {
   try {
     const browser = await puppeteer.launch({
       defaultViewport: null,
-      headless: false,
+      headless: true,
       ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ["--enable-automation"],
       args: [
@@ -33,6 +33,9 @@ app.use("/api", async function (req, res) {
         "--disable-breakpad",
         "--no-sandbox",
         "--disable-setuid-sandbox",
+        "--disable-session-crashed-bubble",
+        "--single-process",
+        "--noerrdialogs",
       ],
     });
     const [page] = await browser.pages();
