@@ -5,11 +5,25 @@ import puppeteer from "puppeteer";
 import cheerio from "cheerio";
 
 const app = express();
-const PORT = 3003;
+const PORT = process.env.PORT || 4000;
 
 app.use("/api", async function (req, res) {
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      ignoreHTTPSErrors: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process",
+        "--disable-gpu",
+        "--ignore-certificate-errors",
+      ],
+    });
     const [page] = await browser.pages();
 
     await page.setViewport({ width: 1920, height: 1080 });
