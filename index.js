@@ -40,13 +40,19 @@ app.use("/api", async function (req, res) {
     });
     const [page] = await browser.pages();
 
+    await page.setRequestInterception(true);
+    page.on("request", (request) => {
+      if (request.resourceType() === "image") request.abort();
+      else request.continue();
+    });
+
     await page.setViewport({ width: 1920, height: 1080 });
 
     await page.setUserAgent(
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
     );
 
-    await page.goto(req.query.url, { waitUntil: "networkidle0" });
+    await page.goto(req.query.url, { waitUntil: "domcontentloaded" });
 
     await page.mouse.move(Math.random() * 1000, Math.random() * 1000);
     await page.mouse.click(Math.random() * 1000, Math.random() * 1000);
