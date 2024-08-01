@@ -8,6 +8,7 @@ export async function getFeed(req, res) {
       headless: true,
       ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ["--enable-automation"],
+      executablePath: "/usr/bin/chromium-browser",
       args: [
         "--kiosks",
         "--disable-accelerated-2d-canvas",

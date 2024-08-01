@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
-    "postinstall": "npx puppeteer browsers install chrome"
+    "postinstall": "apt-get install chromium-browser && npx puppeteer browsers install chrome"
   },
   "author": "",
   "license": "ISC",
