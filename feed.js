@@ -8,7 +8,6 @@ export async function getFeed(req, res) {
       headless: true,
       ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ["--enable-automation"],
-      executablePath: "/usr/bin/chromium-browser",
       args: [
         "--kiosks",
         "--disable-accelerated-2d-canvas",
@@ -31,6 +30,7 @@ export async function getFeed(req, res) {
         "--disable-session-crashed-bubble",
         "--single-process",
         "--noerrdialogs",
+        "--disabled-setupid-sandbox",
       ],
     });
     const [page] = await browser.pages();
