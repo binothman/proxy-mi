@@ -1,9 +1,15 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import cheerio from "cheerio";
+import locateChrome from "locate-chrome";
 
 export async function getFeed(req, res) {
   try {
+    const executablePath = await new Promise((resolve) =>
+      locateChrome((arg) => resolve(arg))
+    );
+
     const browser = await puppeteer.launch({
+      executablePath,
       defaultViewport: null,
       headless: true,
       ignoreHTTPSErrors: true,

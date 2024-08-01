@@ -1,7 +1,11 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import locateChrome from "locate-chrome";
 
 export async function getContent(req, res) {
   try {
+    const executablePath = await new Promise((resolve) =>
+      locateChrome((arg) => resolve(arg))
+    );
     const browser = await puppeteer.launch({
       defaultViewport: null,
       headless: true,
@@ -29,6 +33,7 @@ export async function getContent(req, res) {
         "--disable-session-crashed-bubble",
         "--single-process",
         "--noerrdialogs",
+        "--disabled-setupid-sandbox",
       ],
     });
     const [page] = await browser.pages();
@@ -42,7 +47,10 @@ export async function getContent(req, res) {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
     );
 
-    await page.goto(req.query.url, { waitUntil: "domcontentloaded" });
+    await page.goto(req.query.url, {
+      waitUntil: "domcontentloaded",
+      timeout: 0,
+    });
 
     await page.mouse.move(Math.random() * 1000, Math.random() * 1000);
     // await page.mouse.click(Math.random() * 1000, Math.random() * 1000);
