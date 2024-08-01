@@ -34,6 +34,9 @@ export async function getFeed(req, res) {
     });
     const [page] = await browser.pages();
 
+    const client = await page.target().createCDPSession();
+    await client.send("Network.disable");
+
     await page.setRequestInterception(true);
     page.on("request", (request) => {
       if (request.resourceType() === "image") request.abort();

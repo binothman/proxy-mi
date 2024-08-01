@@ -33,6 +33,9 @@ export async function getContent(req, res) {
     });
     const [page] = await browser.pages();
 
+    const client = await page.target().createCDPSession();
+    await client.send("Network.disable");
+
     await page.setViewport({ width: 1920, height: 1080 });
 
     await page.setUserAgent(
