@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install curl gnupg -y \
   && apt-get install google-chrome-stable -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
-# Install your app here...
+WORKDIR /usr/src/app
+COPY package.json ./
+RUN npm install
 
-
-CMD [ "node", "index.js" ]
+CMD node index.js
