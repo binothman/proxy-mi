@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install curl gnupg -y \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-CMD npm install && npm run start
+CMD yarn install
