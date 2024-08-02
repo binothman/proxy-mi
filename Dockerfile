@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install curl gnupg -y \
   && rm -rf /var/lib/apt/lists/*
 
 
-RUN ls -l
+CMD ls -l
