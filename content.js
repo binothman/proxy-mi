@@ -3,14 +3,12 @@ import locateChrome from "locate-chrome";
 
 export async function getContent(req, res) {
   try {
-    const executablePath = await new Promise((resolve) =>
-      locateChrome((arg) => resolve(arg))
-    );
     const browser = await puppeteer.launch({
       defaultViewport: null,
       headless: true,
       ignoreHTTPSErrors: true,
       ignoreDefaultArgs: ["--enable-automation"],
+      executablePath: "/usr/bin/google-chrome",
       args: [
         "--kiosks",
         "--disable-accelerated-2d-canvas",
