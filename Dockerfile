@@ -3,7 +3,7 @@ FROM node:latest
 # We don't need the standalone Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
-
+COPY . /app
 # Install Google Chrome Stable and fonts
 # Note: this installs the necessary libs to make the browser work with Puppeteer.
 RUN apt-get update && apt-get install curl gnupg -y \
@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install curl gnupg -y \
   && rm -rf /var/lib/apt/lists/*
 
 
-CMD cd usr/src && ls
+CMD cd /app && ls
