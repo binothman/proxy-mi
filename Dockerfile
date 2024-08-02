@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install curl gnupg -y \
 
 
 
-CMD node index.js
+CMD ls
