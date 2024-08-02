@@ -13,3 +13,8 @@ RUN apt-get update && apt-get install curl gnupg -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Install your app here...
+RUN npm install
+
+EXPOSE 8080
+
+CMD [ "node", "index.js" ]
