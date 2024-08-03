@@ -1,12 +1,39 @@
 import puppeteer from "puppeteer-core";
 
-// const executablePath = process.env.EXECUTABLE_PATH || "/usr/bin/google-chrome";
+const executablePath = process.env.EXECUTABLE_PATH || "/usr/bin/google-chrome";
 
 export async function getPageContent(url) {
   try {
-    const browser = await puppeteer.connect({
-      browserWSEndpoint:
-        "wss://browserless-production-f7b8.up.railway.app?token=wwoqW3Cp5qDBDCCGlL7qcUOwvQbaoBJvMPc7Ug2ks6JDaTJb",
+    const browser = await puppeteer.launch({
+      executablePath,
+      defaultViewport: null,
+      headless: true,
+      ignoreHTTPSErrors: true,
+      ignoreDefaultArgs: ["--enable-automation"],
+      args: [
+        "--kiosks",
+        "--disable-accelerated-2d-canvas",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-canvas-aa",
+        "--disable-2d-canvas-clip-aa",
+        "--disable-gl-drawing-for-tests",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--no-zygote",
+        "--use-gl=desktop",
+        "--hide-scrollbars",
+        "--mute-audio",
+        "--no-first-run",
+        "--disable-infobars",
+        "--disable-breakpad",
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-session-crashed-bubble",
+        "--single-process",
+        "--noerrdialogs",
+        "--disabled-setupid-sandbox",
+      ],
     });
     const [page] = await browser.pages();
 
